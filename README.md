@@ -1,6 +1,7 @@
 # multirobot
 Forked from https://github.com/emrecanbulut/multirobot
-Copy the multirobot folder under your catkin workspace source directory (e.g ```~/catkin_ws/src/multirobot```) 
+
+Download (or clone) the multirobot folder and move it under your catkin workspace source directory (e.g ```~/catkin_ws/src/multirobot```) 
 To run, open up a new terminal and type ```roslaunch multirobot gazebo_multirobot.launch``` , this should run the gazebo showing 2 robots alongside.
 
 ```robot1.py``` is the sample controller code for thief and ```robot2.py``` is the same for the police. For now, there is no difference in between them (except the node names). To make these codes work, first ```cd``` into the multirobot directory, make them executable (```chmod +x robot1.py```) and run by ```./robot1.py``` .
