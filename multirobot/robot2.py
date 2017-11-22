@@ -58,12 +58,12 @@ class image_converter:
 
 
 
-	hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
+	#hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
 
 	# define range of white color in HSV
-	lower_blue = np.array([185,185,185])
-	upper_blue = np.array([185,185,185])
-	print("heel33333o")
+	#lower_blue = np.array([185,185,185])
+	#upper_blue = np.array([185,185,185])
+	#print("heel33333o")
 
 	#mask = cv2.inRange(hsv, lower_green, upper_green)
 	output_image = np.array([[[ 0 for k in range(3)]
