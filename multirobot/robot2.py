@@ -16,6 +16,13 @@
 import rospy
 ## Required for some printing options
 import sys
+import numpy as np
+
+import roslib
+import cv2
+from std_msgs.msg import String
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge, CvBridgeError
 
 ## This is needed for the data structure containing the motor command.
 from geometry_msgs.msg import Twist
@@ -36,6 +43,56 @@ SLOW = 3
 ## ----------CHANGE THIS FUNCTION TO MAKE THE ROBOT EXPLORE INTELLIGENTLY----------
 ## --------------------------------------------------------------------------------
 ##
+class image_converter:
+  def __init__(self):
+    self.image_pub = rospy.Publisher("image_topic_2",Image)
+    self.bridge = CvBridge()
+    self.image_sub = rospy.Subscriber("/camera/rgb/image_raw",Image,self.callback)
+
+  def callback(self,data):
+	print("heelo")
+	try:
+	  cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+	except CvBridgeError as e:
+	  print(e)
+
+
+
+	hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
+
+	# define range of white color in HSV
+	lower_blue = np.array([185,185,185])
+	upper_blue = np.array([185,185,185])
+	print("heel33333o")
+
+	#mask = cv2.inRange(hsv, lower_green, upper_green)
+	output_image = np.array([[[ 0 for k in range(3)]
+			 for n in range(int(len(cv_image[0])/5))]
+			  for m in range (int(len(cv_image)/5))] ) 
+
+	for x in  range(0,len(cv_image),5):
+		for y in  range(0, len(cv_image[0]),5):
+			acc1 =0
+			acc2 =0
+			acc3 =0
+			for m in range(x,x+5,1):
+				for n in range(y,y+5,1):
+					acc1 = cv_image[m][n][0] +acc1
+					acc2 = cv_image[m][n][1] +acc2
+					acc3 = cv_image[m][n][2] +acc3
+			output_image[x/5][y/5][0] = acc1/25;
+			output_image[x/5][y/5][1] = acc2/25;
+			output_image[x/5][y/5][2] = acc2/25;
+
+	for x in range(len(output_image)):
+	  for y in range(len(output_image[0])):
+		  if (output_image[x][y][0] <= 255 and output_image[x][y][0] > 155)  and (output_image[x][y][1] <= 255 and output_image[x][y][1] > 155) and (output_image[x][y][2] <= 255 and output_image[x][y][2] > 150):
+			  print("HEY, I HAVE SEEN WHITE\n")
+			  
+	cv2.imshow("Image window", cv_image)
+	cv2.waitKey(3)
+	
+
 def laser_callback(data):
     global laser
     global righthalf_tmp
@@ -154,6 +211,7 @@ def map_callback(data):
 def explorer_node():
     ## We must always do this when starting a ROS node - and it should be the first thing to happen
     rospy.init_node('robot2')
+    ic = image_converter()
     
     ## Here we declare that we are going to publish "Twist" messages to the topic /cmd_vel_mux/navi. It is defined as global because we are going to use this publisher in the laser_callback.
     global motor_command_publisher
