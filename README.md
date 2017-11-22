@@ -11,4 +11,7 @@ There are several issues coming with multiple robots; for example they should no
 
 If you are going to copy-paste your own code to robot1.py or robot2.py, make sure your node is publishing the same nodes as I did in robot1.py and robot2.py. Long in short, we were publishing navigation commands to ```/cmd_vel_mux/input/navi``` but for now, it must be ```/robot1/cmd_vel```. Review the code for ```scan``` and ```map``` publishment and subscribment paths, as well.
 
- 
+# Update for the meshes
+Download then extract the meshes.tar.gz. You'll have a folder named "meshes". Then open up a new terminal and type ```sudo nautilus``` then press return (enter) and type your password, enter again; this will open a file browser (with high permissions). Now, click ```Computer``` from left panel. Now, navigate to ```/opt/ros/kinetic/share/turtlebot_description``` folder by double-clicking the corresponding folders. After that, replace the "meshes" folder with the downloaded "meshes" folder by dragging and dropping. 
+
+Now, all of the necessary replacements and backups are made. You have red turtlebots now.
