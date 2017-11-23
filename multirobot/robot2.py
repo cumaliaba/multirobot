@@ -87,7 +87,7 @@ class image_converter:
 	for x in range(len(output_image)):
 	  for y in range(len(output_image[0])):
 		  if (output_image[x][y][0] <= 255 and output_image[x][y][0] > 155)  and (output_image[x][y][1] <= 255 and output_image[x][y][1] > 155) and (output_image[x][y][2] <= 255 and output_image[x][y][2] > 150):
-			  print("HEY, I HAVE SEEN RED\n")
+			  print("HEY, I HAVE SEEN whites\n")
 			  
 	cv2.imshow("Image window", cv_image)
 	cv2.waitKey(3)
